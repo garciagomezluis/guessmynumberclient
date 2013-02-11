@@ -1,0 +1,69 @@
+$_table-width:auto;
+$_table-height:auto;
+$_table-padding:0;
+$_tipo-celda:th;
+$_cell-background:maroon;
+$_cell-color:black;
+$_cell-padding:0;
+$_tr-background:inherit;
+$_tr-color:black;
+$_trhover-background:maroon;
+$_trhover-color:white;
+$_tr-background-odd:gray;
+$_tr-background-even:white;
+
+@function setColor($background: #000, $margen-contraste : 30%) {
+	  @if lightness($background) > 50% {
+	    @return darken($background, $margen-contraste);
+	  }@else{
+	  	@return lighten($background, $margen-contraste);
+	  }
+}
+
+@mixin setTABLE($width: $_table-width, $height: $_table-height, $padding: $_table-padding){
+      width: $width;
+      height: $height;
+      padding: $padding;
+      margin: 0 auto;
+}
+
+@mixin setCeldas($tipo: $_tipo-celda, $background: $_cell-background, $padding: $_cell-padding){
+
+	@if $tipo == th
+	{
+		th{
+			background-color: $background;
+			color: setColor($background, 90%);
+			padding: $padding;
+			text-align: center;
+			cursor: default;
+		}
+	}@else{
+		td{
+			//background-color: $background;
+			//color: setColor($background);
+			padding: $padding;
+			text-align: center;
+			border-bottom: 1px solid setColor($background, 90%);
+		}
+	}
+}
+
+@mixin setTRColors($background-odd: $_tr-background-odd, $background-even: $_tr-background-even){
+	tr:nth-child(odd){
+		background-color: $background-odd;
+		color: setColor($background-odd, 70%);
+	}
+	tr:nth-child(even){
+		background-color: $background-even;
+		color: setColor($background-even, 70%);
+	}
+}
+
+@mixin setTRHover($background-hover: $_trhover-background){
+      tr:hover {
+        background-color: $background-hover;
+        color: setColor($background-hover, 100%);
+        cursor: pointer;
+      }
+}

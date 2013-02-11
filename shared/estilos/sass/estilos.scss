@@ -1,0 +1,351 @@
+/************************************************************
+
+CLIENTE - GUESSMYNUMBER
+Hoja de estilos.
+
+Empresa: Despegar.com SA
+Grupo: Escuelita de desarrollo web
+Proyecto: GuessMyNumber - Cliente
+Fecha: 07/02/2013
+
+    García Gómez Luis
+
+************************************************************/
+
+@import "declaraciones";
+
+html{
+  height: 100%;
+}
+
+body{
+  @extend html;
+  background-color: $background-body;
+  color: $color-body;
+  font-family: $fontfamily-body;
+  font-size: $fontsize-body;
+}
+
+.border-general{
+  @include border-radius($radius-general);
+}
+
+.fonts{
+  font-weight: bold;
+}
+
+.paddings1{
+    padding: 5px;
+}
+
+.paddings2{
+  padding: 10px;
+}
+
+.centrar_horizontal{
+  margin: 0 auto;
+}
+
+.texts{
+  text-decoration: none;
+}
+
+.heights{
+  height: auto;
+}
+
+.displays{
+  display: none;
+}
+
+.p-fixed{
+  position: fixed;
+}
+
+.p-relative{
+  position: relative;
+}
+
+.bottoms{
+  bottom: 0;
+}
+
+.indents{
+  text-indent: 0;
+}
+
+.widths{
+  width: 100px;
+}
+
+.floats{
+  float: right;
+}
+
+
+/*CONTROLES DE FORMULARIO **********************************/
+
+input{
+  @extend .paddings1;
+  border: 2px solid;
+
+    &[type="submit"], &[type="button"]{
+      @extend .border-general;
+      @extend .widths;
+      background-color: $background-button;
+      color: $color-button;
+      cursor: pointer;
+
+      &:hover{
+        @extend .p-relative;
+        top: 1px;
+        left: 1px;
+      }
+
+    }
+
+    &[type="text"], &[type="password"]{
+      @extend .border-general;
+      background-color: $background-textbox;
+      color: $color-textbox;
+    }
+}
+
+/*ELEMENTOS DE MUESTRA *************************************/
+
+h1, h2, h3, h4, h5, h6 {
+  @extend .fonts;
+  color: $color-h;
+  letter-spacing: 3px;
+}
+
+h1{ font-size: 25px; }
+h2{ font-size: 20px; }
+
+a{
+  @extend .texts;
+  color: $color-a;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+}
+
+p{
+  text-indent: 50px;
+
+  &.mensaje {
+    @extend .paddings1;
+    @extend .indents;
+    color: $color-p_mensaje;
+  }
+
+}
+
+/*PANELES **************************************************/
+
+#login {
+  @extend .displays;
+  background-color: $background-login;
+  padding: 1%;
+  min-height: 200px;
+  margin-top: 100px;
+  width: 98%;
+
+  div {
+    padding: 3px;
+  }
+
+  input {
+    &[type="button"] {
+      margin-left: 10px;
+    }
+
+    &[type="text"] {
+      @include single-transition(width, 1s);
+      width: 300px;
+      height: 25px;
+      font-size: 20px;
+      border-width: 3px;
+
+        &:hover{
+          width: 400px;
+        }
+    }
+  }
+}
+
+#panel {
+  @include box-shadow($shadow-panel);
+  @include border-radius(0 10px 10px 0);
+  @extend .centrar_horizontal;
+  @extend .heights;
+  @extend .displays;
+  background-color: $background-panel;
+  border-color-left: $border-panel-izquierdo;
+  border-color-right: $border-panel-derecho;
+  width: 800px;
+  min-height: 95%;
+  border-width: 0 1px 0 15px;
+  border-style: solid;
+  padding: 0 0 1% 0;
+  border-bottom: 1px solid transparent;
+
+  #banner {
+    @extend .heights;
+    @extend .p-fixed;
+    background-color: $background-banner;
+    min-width: 800px;
+    width: 100%;
+    min-height: 80px;
+    padding-top: 20px;
+    left: 0;
+    z-index: 100;
+
+    .centrar {
+      @extend .centrar_horizontal;
+      width: 800px;
+    }
+
+    h1, h2, h3{
+      @extend .texts;
+      color: $color-banner-h;
+      letter-spacing: 10px;
+    }
+
+    h1 {
+      margin-left: 75px;
+    }
+
+    h2 {
+      margin-left: 150px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    h3{
+      @extend .floats;
+      letter-spacing: 0;
+      font-size: 12px;
+    }
+  }
+
+
+  .contenido {
+    @extend .heights;
+    @extend .displays;
+    color: $color-contenido;
+    background-color: $background-panel; 
+    width: 96%;
+    min-height: 250px;
+    padding: 2%;
+    padding-top: 120px;
+
+    .tabla{
+      @include setTABLE(80%, auto, 5px);
+      @include setCeldas(th, $background-th, 5px);
+      @include setCeldas(td, $background-td, 5px);
+    }
+
+    #tabla_jugadores{
+      @extend .tabla;
+      @include setTRHover($background-tr_hover);
+    }
+
+    #tabla_partida{
+      @extend .tabla;
+      @include setTRColors($background-tr, $background-tr_hover);
+    }
+
+    input[type="text"] {
+      @include border-radius(0);
+      @extend .fonts;
+      @extend .widths;
+      border-bottom: 1px solid $border-general;
+      border-width: 0;
+      background-color: inherit;
+    }
+
+    .setear_numero {
+      @extend .paddings2;
+    }
+    
+    .titulo {
+      margin-top: 0;
+      margin-bottom: auto;
+    }
+
+    .ingresar_numero {
+      @include border-radius($radius-izquierdo);
+      @extend .p-relative;
+      @extend .floats;
+      background-color: $background-ingresar_numero;
+      min-width: 170px;
+      width: auto;
+      height: 30px;
+      top: -10px;
+      left: 16px;
+      padding: 5px 5px 5px 10px;
+    }
+
+  }
+}
+
+/*OTROS ****************************************************/
+
+#cargador {
+  @include border-radius($radius-cargador);
+  @extend .p-fixed;
+  @extend .bottoms;
+  background-image: $path-image-cargador;
+  background-color: $background-cargador;
+  background-size: 26px 26px;
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  padding: 8px 5px 8px 35px;
+  height: 20px;
+  display: inline-block;
+  visibility: hidden;
+  border: 1px solid transparent;
+}
+
+#presentacion
+{
+  @include border-radius(10px 0 0 0);
+  @include transition(width 0.5s, border-color 0.5s, padding 0.5s);
+  @extend .displays;
+  @extend .p-fixed;
+  @extend .bottoms;
+  background-color: $background-presentacion;
+  color: $color-presentacion;
+  border: 3px solid $border-general;
+  width: 0;
+  height: 300px;
+  border-right: none;
+  border-bottom: none;
+  padding: 1px;
+  right: 0;
+  z-index: 1000;
+
+    &:hover{
+      @extend .paddings2;
+      border-color: $color-presentacion;
+      width: 250px;
+      overflow: auto;
+    }
+
+    p{
+      @extend .indents;
+      padding: 10px 0 10px 0;
+      font-size: 25px;
+    }
+
+    .tabla_jugando {
+      @include setTABLE(70%, auto, 5px);
+      @include setCeldas(th, $background-panel, 5px);
+      @include setCeldas(td, $background-panel, 5px);
+      @include setTRHover($background-panel);
+    }
+    
+}

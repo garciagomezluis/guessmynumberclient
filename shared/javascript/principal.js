@@ -1,0 +1,2 @@
+var guessnumber = {};
+guessnumber.shared = {};

@@ -1,0 +1,48 @@
+
+	@import "mixins";
+
+$background-login: #9A795A;
+$background-body: #D2B597;
+$background-panel: #B08E6B;
+$background-banner: #800000;
+$background-textbox: #FFFFFF;
+$background-cargador: #FF0000;
+
+$background-aux1: lighten($background-banner, 10%);
+
+$background-button: $background-banner;
+$background-ingresar_numero: $background-aux1;
+$background-th: $background-banner;
+$background-td: $background-panel;
+$background-tr: $background-panel;
+$background-tr_hover: $background-aux1;
+$background-contenido: $background-panel;
+$background-presentacion: $background-banner;
+
+$path-image-cargador: url('../../../images/cargar.gif');
+
+$color-body: setColor($background-body);
+$color-a: setColor($background-banner, 100%);
+$color-p_mensaje: setColor($background-banner, 0%);
+$color-textbox: setColor($background-banner, 0%);
+$color-button: setColor($background-button, 100%);
+$color-contenido: setColor($background-contenido);
+$color-h: setColor($background-login, 70%);
+$color-banner-h: setColor($background-banner, 70%);
+$color-presentacion: setColor($background-presentacion, 70%);
+
+$radius-general: 20px;
+$radius-izquierdo: 10px 0 0 10px;
+$radius-cargador: 0 10px 0 0;
+
+$border-general: $background-banner;
+$border-panel-derecho: $background-textbox;
+$border-panel-izquierdo: #1A334C;
+
+$fontfamily-body: Helvativa, Verdana, sans-serif;
+$fontsize-body: 14px;
+
+$shadow-panel: #000000 3px 3px 3px;
+
+  @import "compass/reset";
+  @import "compass/css3";

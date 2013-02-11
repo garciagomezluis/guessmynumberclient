@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="es-ES">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>guessmynumber!</title>
+		<link rel="stylesheet" type="text/css" href="shared/estilos/css/estilos.css"/>
+		<script type="text/javascript" src="shared/javascript/principal.js"></script>
+		<script type="text/javascript" src="shared/javascript/datos.js"></script>
+		<script type="text/javascript" src="shared/javascript/ajax.js"></script>
+		<script type="text/javascript" src="shared/javascript/genericos.js"></script>
+		<script type="text/javascript" src="shared/javascript/entorno.js"></script>
+		<script type="text/javascript" src="shared/javascript/datosjson.js"></script>
+		<script type="text/javascript" src="shared/javascript/json2.js"></script>
+		<script type="text/javascript" src="shared/javascript/cliente.js"></script>
+		<script type="text/javascript" src="shared/javascript/extra.js"></script>
+		<script type="text/javascript" src="shared/javascript/handlebars.js"></script>
+		<script type="text/javascript" src="shared/javascript/handlebars-helpers.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+		<script id="datos-jugadores-template" type="text/x-handlebars-template">
+
+			<table id="tabla_jugadores">
+				<tr class="tablehead">
+					<th>Jugadores</th>
+					<th>Activado</th>
+					<th>ID de n&uacute;mero</th>
+					<th>¿Estamos jugando?</th>
+					<th>Puntos</th>
+				</tr>
+				{{#each players}}
+					{{#if this.numberActivated}}
+						<tr id="{{this.publicUuid}}" name="filas_jugadores">
+							<td>{{gravatar this.publicUuid '80px'}}</td>
+							<td>Si</td>
+							<td>{{this.numberId}}</td>
+							<td>{{esJugando this.publicUuid}}</td>
+							<td>{{this.score}}</td>
+						</tr>
+					{{/if}}
+				{{/each}}
+			</table>
+
+		</script>
+		<script id="datos-rivales-template" type="text/x-handlebars-template">
+
+			{{#esVacio actual}}
+				<p name="filas_rivales" id="{{actual.datosrivales.publicUuid}}">{{gravatar actual.datosrivales.publicUuid '40px'}} Tiene {{actual.datosrivales.score}} puntos</p>
+			{{/esVacio}}
+
+				<table class="tabla_jugando">
+					<tr class="tablehead">
+						<th>Partidas activas</th>
+						<th>Puntos</th>
+					</tr>
+					{{#each jugando}}
+						{{#if this.datosrivales.numberActivated}}
+							<tr id="{{this.datosrivales.publicUuid}}" name="filas_rivales">
+								<td>{{gravatar this.datosrivales.publicUuid '30px'}}</td>
+								<td>{{this.datosrivales.score}}</td>
+							</tr>
+						{{/if}}
+					{{/each}}
+				</table>
+
+		</script>
+	</head>
+
+	<body>
+		
+		<div id="cargador">
+			Cargando datos..
+		</div>
+
+		<div id="presentacion"></div>
+
+		<div id="login">
+
+				<h1>Registrate!</h1>
+
+				<div>
+					<input type="text" value="http://127.0.0.1" id="idtxt_servidor" name="servidor" value="Servidor"/>
+				</div>
+				<div>
+					<input type="text" value="9999" maxlength="4" id="idtxt_puerto" name="puerto" value="Puerto"/>
+				</div>
+				<div>
+					<input type="text" maxlength="20" id="idtxt_nombre" name="nombre" value="Nombre"/>
+				</div>
+
+				<p id="mensaje_registrar" class="mensaje"></p>
+
+				<input type="button" name="clear" value="Limpiar" id="btn_limpiar" />
+
+				<input type="button" name="send" value="Registrarme!" id="btn_registrar" />
+
+		</div>
+
+		<div id="panel">
+
+			<div id="banner">
+
+				<div class="centrar">
+					<h1>Garc&iacute;a G&oacute;mez Luis</h1>
+					<h2>Escuelita de desarrollo web</h2>
+					<a href="#" id="mostrar_jugadores">Jugadores</a>
+					<h3 id="mensajes"></h3>
+				</div>
+
+			</div>
+
+			<div id="contenido_setear" class="contenido">
+
+				<h2 class="titulo" id="mod_1">Seteando un n&uacute;mero</h2>
+
+				<p>Ingrese un n&uacute;mero de cuatro cifras las cuales, los dem&aacute;s competidores deber&aacute;n adivinar en el orden correcto! Una vez realizada esta acci&oacute;n, el sistema lo redirigir&aacute; a la p&aacute;gina para empezar a jugar.</p>
+
+				<div class="setear_numero">
+					<input type="text" maxlength="4" name="number" id="idtxt_numero" />
+					<input type="button" name="send" value="Enviar!" id="btn_enviarnumero" />
+					<input type="button" name="generar" value="Aleatorio!" id="btn_aleatorio" />
+				</div>
+				
+				<p id="mensaje_setear" class="mensaje"></p>
+
+			</div>
+
+			<div id="contenido_jugar" class="contenido">
+
+				<div class="ingresar_numero">
+					<label for="number">N&uacute;mero:</label>
+					<input type="text" maxlength="4" name="number" id="idtxt_adivinar" />
+				</div>
+
+				<h2 class="titulo">Vamos a jugar!</h2>
+
+				<p>Intente adivinar los n&uacute;meros de los dem&aacute;s competidores! Puede ingresarlos en el campo de arriba a la derecha y ver m&aacute;s abajo cual es el resultado!</p>
+
+				<p id="mensaje_jugar" class="mensaje"></p>
+
+				<table id="tabla_partida">
+					<tr class="tablehead">
+						<th>N&uacute;meros ingresados</th>
+						<th>Correctos</th>
+						<th>Existentes</th>
+						<th>Incorrectos</th>
+					</tr>
+				</table>
+				
+			</div>
+
+			<div id="contenido_datos" class="contenido"></div>
+			
+		</div>
+		
+	</body>
+
+</html>
