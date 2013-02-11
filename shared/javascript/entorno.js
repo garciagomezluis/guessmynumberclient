@@ -19,13 +19,11 @@ guessnumber.shared.Entorno = function() {
 			var resultado = miResultado.getResultado();
 
 				for(var i = 0, l = resultado.consulta.players.length; i < l; i++)
-				{
 					if(resultado.rivales.actual != undefined && resultado.rivales.actual.datosrivales != undefined && resultado.rivales.actual.datosrivales.publicUuid == resultado.consulta.players[i].publicUuid)
 					{
 						resultado.rivales.actual.datosrivales = resultado.consulta.players[i];
 						break;
 					}
-				}
 
 			miResultado.setResultado(resultado);
 		};
@@ -171,8 +169,8 @@ guessnumber.shared.Entorno = function() {
 				
 				if(i == imejorjugada.iteracion)
 				{
-					fila.style.backgroundColor = 'white';
-					fila.style.color = 'black';
+					fila.style.backgroundColor = 'black';
+					fila.style.color = 'white';
 				}
 
 				for(var opt in jugadas[i])
