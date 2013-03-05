@@ -1,6 +1,7 @@
 /***********************************************************
 ******** INFORMACIÓN ***************************************
 ***********************************************************/
+//Archivo de descripción de funciones para la aplicación.
 /*
 
 Ajax: Realiza las llamadas asíncronas con el servidor, muestra mensajes de errores y un loader durante la espera.
